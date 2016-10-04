@@ -10,6 +10,9 @@ import com.rana.kisannetwork.R;
 import com.rana.kisannetwork.datastructure.Contacts;
 import com.rana.kisannetwork.datastructure.JKeys;
 
+/**
+ * User comes to this activity after selecting contact from first tab fragment
+ */
 public class ContactsDetailActivity extends AppCompatActivity {
 
 
@@ -25,6 +28,11 @@ public class ContactsDetailActivity extends AppCompatActivity {
 
     }
 
+
+    /**
+     * Initializes viws
+     * @param contact Instance of contact
+     */
     private void initializeViews(Contacts contact) {
         tvFName = (TextView) findViewById(R.id.first_name_contactdetails);
         tvLName = (TextView) findViewById(R.id.last_name_contactdetails);
@@ -38,6 +46,11 @@ public class ContactsDetailActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Extracts data from Intent and
+     * @param intent Intent containg info
+     * @return {@link Contacts instance}
+     */
     private Contacts receiveContactInfo(Intent intent) {
         String fName = intent.getStringExtra(JKeys.FIRST_NAME);
         String lName = intent.getStringExtra(JKeys.LAST_NAME);

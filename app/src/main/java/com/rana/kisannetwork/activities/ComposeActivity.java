@@ -31,6 +31,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
+/**
+ * Activity for Composing message after seleting contant and generating otp
+ */
 public class ComposeActivity extends AppCompatActivity {
 
     EditText editText;

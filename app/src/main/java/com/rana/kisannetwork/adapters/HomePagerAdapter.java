@@ -16,6 +16,10 @@ import com.rana.kisannetwork.fragments.SecondTab;
  * choosing for companies
  */
 
+/**
+ * An adapter for ViewPager at very first instance
+ * containng fragments
+ */
 public class HomePagerAdapter extends FragmentPagerAdapter {
     public HomePagerAdapter(FragmentManager fm) {
         super(fm);

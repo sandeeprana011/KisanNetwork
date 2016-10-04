@@ -9,6 +9,9 @@ package com.rana.kisannetwork.datastructure;
  * choosing for companies
  */
 
+/**
+ * This class keeps the constant varibale
+ */
 public class Constants {
     public static final String ACCOUNT_SID = "AC781b2c1cf74fa564e6031020aa5ac179";
     public static final String AUTH_TOKEN = "2436891f77398f323bb16976fd5df1b4";

@@ -9,6 +9,11 @@ package com.rana.kisannetwork.datastructure;
  * choosing for companies
  */
 
+
+/**
+ * A class for
+ */
+
 public class Contacts {
     private String firstName;
     private String lastName;

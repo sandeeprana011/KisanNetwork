@@ -10,6 +10,10 @@ import com.rana.kisannetwork.datastructure.Contacts;
  * a second commercial license of your
  * choosing for companies
  */
+
+/**
+ * Listener for Contact List item clicked
+ */
 public interface ListenerContactClicked {
     public void contactClicked(Contacts contacts);
 }

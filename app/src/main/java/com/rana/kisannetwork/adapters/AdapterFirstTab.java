@@ -20,6 +20,9 @@ import java.util.ArrayList;
  * choosing for companies
  */
 
+/**
+ * Adapter for recycle view in first tab
+ */
 public class AdapterFirstTab extends RecyclerView.Adapter<AdapterFirstTab.ViewHolder> {
 
     private final ArrayList<Contacts> contactsList;

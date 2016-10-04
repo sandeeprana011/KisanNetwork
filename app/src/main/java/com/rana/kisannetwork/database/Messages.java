@@ -11,6 +11,9 @@ import com.orm.SugarRecord;
  * choosing for companies
  */
 
+/**
+ * For storing the data into the database
+ */
 public class Messages extends SugarRecord {
     private String timenumber;
     private String tonumber;
@@ -20,6 +23,9 @@ public class Messages extends SugarRecord {
     private String sentstatus;
     private String nameto;
 
+    /**
+     * There must be an empty Constructor
+     */
     public Messages() {
 
     }
