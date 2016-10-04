@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="7dp">
+
+    <TextView
+        android:id="@+id/t_name_sento_itemhistory"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="6dp"
+        android:text="Sandeep Rana"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/t_status_itemhistory"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/t_name_sento_itemhistory"
+        android:layout_marginBottom="6dp"
+        android:text="Sent Successfully!" />
+
+
+    <TextView
+        android:id="@+id/t_otp_itemhistory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/t_status_itemhistory"
+        android:text="OTP : 123445" />
+
+    <TextView
+        android:id="@+id/t_time_itemhistory"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/t_status_itemhistory"
+        android:layout_toRightOf="@id/t_otp_itemhistory"
+        android:gravity="right"
+        android:text="12 Dec 1993 12:12:12" />
+
+</RelativeLayout>
