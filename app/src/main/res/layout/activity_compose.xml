@@ -24,16 +24,17 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/note"
         android:layout_marginBottom="20dp"
+        android:enabled="false"
         android:inputType="text"
         android:padding="7dp"
         android:text="Hi. Your OTP is: 123456" />
 
     <Button
-        android:textColor="#d6d5d5"
         style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/e_message_to_send"
         android:onClick="sendMessageUsingTwilio"
-        android:text="SEND" />
+        android:text="SEND"
+        android:textColor="#d6d5d5" />
 </RelativeLayout>
