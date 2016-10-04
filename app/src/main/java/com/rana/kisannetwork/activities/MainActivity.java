@@ -1,9 +1,10 @@
-package com.rana.kisannetwork;
+package com.rana.kisannetwork.activities;
 
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 
+import com.rana.kisannetwork.R;
 import com.rana.kisannetwork.adapters.HomePagerAdapter;
 
 public class MainActivity extends AppCompatActivity {
