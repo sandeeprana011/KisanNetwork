@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -45,6 +46,8 @@ public class ComposeActivity extends AppCompatActivity {
         contacts = this.receiveContactInfo(getIntent());
 
         editText = (EditText) findViewById(R.id.e_message_to_send);
+        TextView noteTextView = (TextView) findViewById(R.id.note);
+        noteTextView.setText("NOTE: all messages will be sent tonumber +91" + contacts.getPhone());
         otpSent = this.getSixDigitRandomNumber();
 
         String textToSend = "Hi. Your OTP is: " + otpSent;
