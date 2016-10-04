@@ -45,6 +45,12 @@ public class FirstTab extends Fragment implements ListenerContactClicked {
             "      \"last_name\": \"Rana\",\n" +
             "      \"phone\": \"9015434206\",\n" +
             "      \"country_code\": \"91\"\n" +
+            "    },\n" +
+            "    {\n" +
+            "      \"first_name\": \"Aditya\",\n" +
+            "      \"last_name\": \"Agarwalla\",\n" +
+            "      \"phone\": \"9111011382\",\n" +
+            "      \"country_code\": \"91\"\n" +
             "    }\n" +
             "  ]\n" +
             "}";
@@ -52,8 +58,6 @@ public class FirstTab extends Fragment implements ListenerContactClicked {
     @Override
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        // The last two arguments ensure LayoutParams are inflated
-        // properly.
         View rootView = inflater.inflate(
                 R.layout.first_tab, container, false);
         RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.rv_first_tab);
@@ -63,9 +67,6 @@ public class FirstTab extends Fragment implements ListenerContactClicked {
 
         recyclerView.setAdapter(adapterFirstTab);
 
-//        Bundle args = getArguments();
-//        ((TextView) rootView.findViewById(android.R.id.text1)).setText(
-//                Integer.toString(args.getInt(FRAG_INDEX)));
         return rootView;
     }
 

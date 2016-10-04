@@ -1,7 +1,6 @@
 package com.rana.kisannetwork.activities;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -48,10 +47,18 @@ public class ContactsDetailActivity extends AppCompatActivity {
     }
 
     public void sendMessage(View view) {
-        Intent sendIntent = new Intent(Intent.ACTION_VIEW);
-        sendIntent.setData(Uri.parse("sms:+" + contact.getCountryCode() + contact.getPhone()));
-        sendIntent.putExtra("sms_body", "From Contact details activity");
-        startActivity(sendIntent);
+        Intent intent = new Intent(this, ComposeActivity.class);
+        intent.putExtra(JKeys.FIRST_NAME, contact.getFirstName());
+        intent.putExtra(JKeys.LAST_NAME, contact.getLastName());
+        intent.putExtra(JKeys.PHONE, contact.getPhone());
+        intent.putExtra(JKeys.COUNTRY_CODE, contact.getCountryCode());
+        startActivity(intent);
+
+
+//        Intent sendIntent = new Intent(Intent.ACTION_VIEW);
+//        sendIntent.setData(Uri.parse("sms:+" + contact.getCountryCode() + contact.getPhone()));
+//        sendIntent.putExtra("sms_body", "From Contact details activity");
+//        startActivity(sendIntent);
 
     }
 }
