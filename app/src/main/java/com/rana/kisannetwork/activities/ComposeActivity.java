@@ -5,13 +5,15 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkError;
+import com.android.volley.ParseError;
 import com.android.volley.Response;
+import com.android.volley.ServerError;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
 import com.rana.kisannetwork.R;
@@ -19,6 +21,7 @@ import com.rana.kisannetwork.database.Messages;
 import com.rana.kisannetwork.datastructure.Constants;
 import com.rana.kisannetwork.datastructure.Contacts;
 import com.rana.kisannetwork.datastructure.JKeys;
+import com.rana.kisannetwork.fragments.FragmentDialog;
 import com.rana.kisannetwork.network.StringRequestOverridden;
 
 import org.json.JSONException;
@@ -60,13 +63,13 @@ public class ComposeActivity extends AppCompatActivity {
     public void sendMessageUsingTwilio(final View view) {
 
 
-        Date date = Calendar.getInstance().getTime();
+        final Date date = Calendar.getInstance().getTime();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String currentDateandTime = sdf.format(date);
         final Messages messages = new Messages(currentDateandTime, Constants.MESSAGE_TO, Constants.FROM,
                 this.editText.getText().toString(), otpSent, "Unknown", contacts.getFirstName() + " " + contacts.getLastName());
 
-        ((Button) view).setText("Sending to " + contacts.getFirstName());
+//        ((Button) view).setText("Sending to " + contacts.getFirstName());
         view.setEnabled(false);
 
         StringRequestOverridden stringRequestOverridden = new StringRequestOverridden
@@ -77,32 +80,76 @@ public class ComposeActivity extends AppCompatActivity {
                         new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {
+                                FragmentDialog fragmentDialog = new FragmentDialog();
+
                                 try {
                                     JSONObject object = new JSONObject(response);
                                     if (object.has(JKeys.BODY) && !object.isNull(JKeys.BODY)) {
-                                        Toast.makeText(ComposeActivity.this, object.getString(JKeys.BODY), Toast.LENGTH_LONG).show();
+                                        fragmentDialog.initDialogue(object.getString(JKeys.BODY), "OK");
+//                                        Toast.makeText(ComposeActivity.this, object.getString(JKeys.BODY), Toast.LENGTH_LONG).show();
                                         messages.setSentstatus("Sent");
-                                        ((Button) view).setText("Sent to " + contacts.getFirstName());
+//                                        ((Button) view).setText("Sent to " + contacts.getFirstName());
+//                                        finish();
                                     } else {
+                                        fragmentDialog.initDialogue("Server Error : Not Specified", "OK");
                                         messages.setSentstatus("Body Not Received");
                                     }
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
+
+                                fragmentDialog.show(getSupportFragmentManager(), "DialogFragment");
                                 view.setEnabled(true);
                                 Log.e("TWILIO", "" + response);
                                 Messages.save(messages);
                             }
                         },
                         new Response.ErrorListener() {
+                            boolean isOk(JSONObject object, String jsonKey) {
+                                return object.has(jsonKey) && !object.isNull(jsonKey);
+                            }
+
                             @Override
                             public void onErrorResponse(VolleyError error) {
+                                FragmentDialog fragmentDialog = new FragmentDialog();
+                                String message = null;
+                                if (error instanceof NetworkError) {
+                                    message = "Cannot connect to Internet.\nPlease check your connection!";
+                                } else if (error instanceof ServerError) {
+                                    message = "The server could not be found. \nPlease try again after some time!!";
+                                } else if (error instanceof AuthFailureError) {
+                                    message = "Authentication Failure!\nAccount SID and Auth Token Mismatch";
+                                } else if (error instanceof ParseError) {
+                                    message = "Parsing error!\nPlease try again after some time!!";
+                                } else if (error instanceof TimeoutError) {
+                                    message = "Connection TimeOut!\nPlease check your internet connection.";
+                                }
+                                if (error.networkResponse != null && error.networkResponse.data != null) {
+                                    try {
+                                        String string = new String(error.networkResponse.data);
+                                        JSONObject object = new JSONObject(string);
+                                        if (isOk(object, JKeys.MESSAGE)) {
+                                            message = object.getString(JKeys.MESSAGE);
+
+                                        }
+
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                        fragmentDialog.initDialogue("Error : " + String.valueOf(error.networkResponse.statusCode), "OK");
+
+                                    }
+
+                                }
+                                fragmentDialog.initDialogue(message, "OK");
+                                fragmentDialog.show(getSupportFragmentManager(), "DialogError");
+
                                 messages.setSentstatus("Failed");
-//                                Toast.makeText(ComposeActivity.this, "Message Not Sent!", Toast.LENGTH_LONG).show();
+
                                 view.setEnabled(true);
-                                ((Button) view).setText("Error! Retry");
+
                                 Log.e("Erro", "" + error.getMessage());
                                 Messages.save(messages);
+
                             }
                         }
                 ) {

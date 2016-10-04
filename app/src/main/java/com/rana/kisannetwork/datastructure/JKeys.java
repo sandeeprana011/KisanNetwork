@@ -16,4 +16,5 @@ public class JKeys {
     public static final String PHONE = "phone";
     public static final String COUNTRY_CODE = "country_code";
     public static final String CONTACTS = "contacts";
+    public static final String MESSAGE = "message";
 }
