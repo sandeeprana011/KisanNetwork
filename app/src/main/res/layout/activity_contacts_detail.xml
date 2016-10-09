@@ -73,13 +73,16 @@
         android:padding="8dp" />
 
     <Button
+        style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="wrap_content"
+
         android:layout_height="wrap_content"
         android:layout_below="@+id/country_code_contactdetails"
         android:layout_centerHorizontal="true"
         android:onClick="sendMessage"
         android:padding="7dp"
-        android:text="Send Message" />
+        android:text="Send Message"
+        android:textColor="#d6d5d5" />
 
 
 </RelativeLayout>

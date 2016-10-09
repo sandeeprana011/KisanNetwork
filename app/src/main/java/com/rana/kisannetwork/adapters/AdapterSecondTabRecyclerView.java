@@ -1,5 +1,6 @@
 package com.rana.kisannetwork.adapters;
 
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,8 +10,11 @@ import android.widget.TextView;
 import com.rana.kisannetwork.R;
 import com.rana.kisannetwork.database.Messages;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by sandeeprana on 04/10/16.
@@ -43,10 +47,15 @@ public class AdapterSecondTabRecyclerView extends RecyclerView.Adapter<AdapterSe
         Messages message = this.arrayListMessages.get(position);
 
 
-        holder.textViewFullName.setText(message.getNameto());
-        holder.textViewTime.setText(message.getTimenumber());
-        holder.textViewOtp.setText(message.getOtp());
+        holder.textViewFullName.setText("to: " + message.getNameto());
+        holder.textViewTime.setText(getFormat12HourHumarReadableWithoutYear(message.getTimenumber()));
+        holder.textViewOtp.setText("OTP : " + message.getOtp());
         holder.textViewStatus.setText(message.getSentstatus());
+        if (message.getSentstatus().equalsIgnoreCase("Sent")) {
+            holder.textViewStatus.setTextColor(Color.parseColor("#519351"));
+        } else {
+            holder.textViewStatus.setTextColor(Color.parseColor("#ff0000"));
+        }
     }
 
 
@@ -61,6 +70,21 @@ public class AdapterSecondTabRecyclerView extends RecyclerView.Adapter<AdapterSe
         super.notifyDataSetChanged();
     }
 
+    public String getFormat12HourHumarReadableWithoutYear(String date) {
+        if (date != null) {
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+            SimpleDateFormat reformatDateFormat = new SimpleDateFormat("dd MMM KK:mm a", Locale.getDefault());
+            try {
+                return reformatDateFormat.format(simpleDateFormat.parse(date)).replace("am", "AM").replace("pm", "PM");
+            } catch (ParseException e) {
+                e.printStackTrace();
+                return null;
+            }
+        } else {
+            return "-";
+        }
+
+    }
 
     class ViewHolder extends RecyclerView.ViewHolder {
         TextView textViewFullName, textViewTime, textViewOtp, textViewStatus;

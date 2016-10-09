@@ -2,6 +2,7 @@ package com.rana.kisannetwork.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -66,7 +67,7 @@ public class ComposeActivity extends AppCompatActivity {
         final Date date = Calendar.getInstance().getTime();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String currentDateandTime = sdf.format(date);
-        final Messages messages = new Messages(currentDateandTime, Constants.MESSAGE_TO, Constants.FROM,
+        final Messages messages = new Messages(currentDateandTime, contacts.getPhone(), Constants.FROM,
                 this.editText.getText().toString(), otpSent, "Unknown", contacts.getFirstName() + " " + contacts.getLastName());
 
 //        ((Button) view).setText("Sending to " + contacts.getFirstName());
@@ -82,12 +83,33 @@ public class ComposeActivity extends AppCompatActivity {
                             public void onResponse(String response) {
                                 FragmentDialog fragmentDialog = new FragmentDialog();
 
+                                Snackbar snackbar = Snackbar.make(view, "Message successfully sent!", Snackbar.LENGTH_SHORT);
                                 try {
                                     JSONObject object = new JSONObject(response);
                                     if (object.has(JKeys.BODY) && !object.isNull(JKeys.BODY)) {
-                                        fragmentDialog.initDialogue(object.getString(JKeys.BODY), "OK");
-//                                        Toast.makeText(ComposeActivity.this, object.getString(JKeys.BODY), Toast.LENGTH_LONG).show();
+
+
+                                        snackbar.setCallback(new Snackbar.Callback() {
+                                            @Override
+                                            public void onDismissed(Snackbar snackbar, int event) {
+                                                super.onDismissed(snackbar, event);
+                                                Log.e("Ondismissed", "Called");
+                                                clearStackAndLandHomeActivity();
+                                            }
+
+                                            @Override
+                                            public void onShown(Snackbar snackbar) {
+                                                super.onShown(snackbar);
+                                                Log.e("ONShown", "called");
+                                            }
+                                        });
+                                        snackbar.show();
                                         messages.setSentstatus("Sent");
+                                        Messages.save(messages);
+                                        return;
+
+//                                        fragmentDialog.initDialogue(object.getString(JKeys.BODY), "OK");
+//                                        Toast.makeText(ComposeActivity.this, object.getString(JKeys.BODY), Toast.LENGTH_LONG).show();
 //                                        ((Button) view).setText("Sent to " + contacts.getFirstName());
 //                                        finish();
                                     } else {
@@ -171,6 +193,16 @@ public class ComposeActivity extends AppCompatActivity {
 
         Volley.newRequestQueue(this).add(stringRequestOverridden);
 
+    }
+
+    private void clearStackAndLandHomeActivity() {
+        /**
+         * go back to HOme Activity
+         */
+        Intent i = new Intent(ComposeActivity.this, MainActivity.class);//homescreen of your app.
+        i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NO_HISTORY);
+        startActivity(i);
+        finish();
     }
 
     String getSixDigitRandomNumber() {

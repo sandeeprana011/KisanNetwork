@@ -31,10 +31,11 @@
 
     <Button
         style="@style/Widget.AppCompat.Button.Colored"
+        android:textColor="#d6d5d5"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/e_message_to_send"
         android:onClick="sendMessageUsingTwilio"
         android:text="SEND"
-        android:textColor="#d6d5d5" />
+        />
 </RelativeLayout>

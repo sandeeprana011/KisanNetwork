@@ -22,7 +22,7 @@ import com.rana.kisannetwork.adapters.AdapterSecondTabRecyclerView;
 public class SecondTab extends Fragment {
 
 
-    public static final CharSequence TITLE = "Messages Sent";
+    public static final CharSequence TITLE = "Message History";
     private AdapterSecondTabRecyclerView adapterFirstTab;
 
     @Override
