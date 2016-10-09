@@ -10,6 +10,6 @@
 [click here](https://github.com/sandeeprana011/KisanNetwork/raw/master/app/src/app-debug.apk)
 
 ##Download Task Document##
-[click here](https://github.com/sandeeprana011/KisanNetwork/raw/master/app/src/KisanNetworkCodingChallenge.pdf)
+[click here](https://github.com/sandeeprana011/KisanNetwork/raw/master/KisanNetworkCodingChallenge.pdf)
 
 
